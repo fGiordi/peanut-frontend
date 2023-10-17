@@ -6,12 +6,19 @@ import { TSalutation, salutationOptions, TGender, colorOptions, TColor } from '@
 import { useState, } from 'react';
 
 const EmployeeForm = () => {
+
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [employeeNumber, setEmployeeNumber] = useState<number | undefined>()
   const [grossSalary, setGrossSalary] = useState<number | undefined>(0)
   const [salutation, setSalutation] = useState<TSalutation>('Mr.')
   const [color, setColor] = useState<TColor>('Default')
+
+
+  const isBlue = color === 'Blue'
+  const isRed = color === 'Red'
+  const isDefault = color === 'Default'
+  const isGreen = color === 'Green'
 
   const isMale = salutation === 'Mr.'
   const isFemale = salutation === 'Mrs.'
