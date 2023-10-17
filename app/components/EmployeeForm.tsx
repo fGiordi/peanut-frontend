@@ -8,6 +8,7 @@ import { useEffect, useState, } from 'react';
 const EmployeeForm = () => {
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
+	const [employeeNumber, setEmployeeNumber] = useState<number | undefined>()
   const [salutation, setSalutation] = useState<TSalutation>('Mr.')
 
   const isMale = salutation === 'Mr.'
@@ -20,7 +21,7 @@ const EmployeeForm = () => {
             <div className="flex space-x-2 items-center justify-center">
               <h5>First Name(s) * </h5>
               <input type="text" className="w-[200px] py-4 h-3 border-2 border-black"
-                onInput={(e) => validateInput(e.target)}
+                onInput={(e) => validateInput(e.target, 'alphabets')}
                 onChange={(e) => setFirstName(e.target.value)}
                 value={firstName}
               />
@@ -28,7 +29,7 @@ const EmployeeForm = () => {
             <div className="flex space-x-7 items-center justify-center">
               <h5>Last Name * </h5>
               <input type="text" className="w-[200px] py-4 h-2 border-2 border-black" 
-              onInput={(e) => validateInput(e.target)}
+              onInput={(e) => validateInput(e.target, 'alphabets')}
               onChange={(e) => setLastName(e.target.value)}
               value={lastName}
               />
@@ -37,8 +38,7 @@ const EmployeeForm = () => {
               <label htmlFor="cars">
                 <h5>Salutation * </h5>
               </label>
-
-              <select className='w-[200px] py-1  border-2 border-black' name="salutation" id="salutation" onChange={(e) => setSalutation(e.target.value as TSalutation) }>
+              <select className='w-[200px] py-1 border-2 border-black' name="salutation" id="salutation" onChange={(e) => setSalutation(e.target.value as TSalutation) }>
                 {salutationOptions.map((item, index) => (
                     <option key={index} value={item}>{item}</option>
                   )
@@ -51,11 +51,19 @@ const EmployeeForm = () => {
               <div className='space-x-1'>
                 <input type="radio" name="gender" value={"Male"} id="male" checked={isMale}  />
                 <label htmlFor="male" className='pr-8 text-black font-medium' >Male</label>
-                <input type="radio" name="gender"  value={"Female"} id="female" checked={isFemale} />
+                <input type="radio" name="gender" value={"Female"} id="female" checked={isFemale} />
                 <label htmlFor="female" className='pr-8 text-black font-medium'>Female</label>
                 <input type="radio" name="gender" value={"Unspecified"} id="unspecified" checked={isUnspecified} />
                 <label htmlFor="unspecified" className='text-black font-medium'>Unspecified</label>
               </div>
+            </div>
+            <div className="flex space-x-7 items-center justify-center">
+              <h5>Employee # * </h5>
+              <input type="text" className="w-[200px] py-4 h-3 border-2 border-black text-right"
+                onInput={(e) => validateInput(e.target, 'numbers')}
+                onChange={(e) => setEmployeeNumber(Number(e.target.value))}
+                value={employeeNumber}
+              />
             </div>
           </div>
           <div className="flex flex-col items-start justify-start w-full space-y-4">
