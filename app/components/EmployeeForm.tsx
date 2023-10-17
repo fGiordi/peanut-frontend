@@ -1,14 +1,15 @@
 'use client'
 
-import { validateInput } from '@/helpers';
+import { validateInput, formatNumber, handleFormattedInput } from '@/helpers';
 import { useEmployeeStore } from '@/store/employee';
 import { TSalutation, salutationOptions, TGender } from '@/types';
-import { useEffect, useState, } from 'react';
+import {  useState, } from 'react';
 
 const EmployeeForm = () => {
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
 	const [employeeNumber, setEmployeeNumber] = useState<number | undefined>()
+	const [grossSalary, setGrossSalary] = useState<number | undefined>(0)
   const [salutation, setSalutation] = useState<TSalutation>('Mr.')
 
   const isMale = salutation === 'Mr.'
@@ -16,6 +17,7 @@ const EmployeeForm = () => {
   const isUnspecified = salutation === 'Mx.'
 
   const fullName = `${firstName} ${lastName}`
+
 
   return (
       <div className="flex justify-between items-start">
@@ -71,17 +73,21 @@ const EmployeeForm = () => {
           <div className="flex flex-col items-start justify-start w-full space-y-4">
             <div className="flex space-x-10 w-[80%] items-center justify-between">
               <h5>Full name * </h5>
-              <input type="text" className="w-[250px] py-4 h-3 border-2 border-black"
+              <input type="text" className="w-full py-4 h-3 border-2 border-black"
               disabled
                 value={fullName}
               />
             </div>
-            <div className="flex space-x-10 items-center justify-center">
-              <h5>Gross Salary </h5>
-              <input type="text" className="w-[200px] py-4 h-2 border-2 border-black" 
-              onInput={(e) => validateInput(e.target, 'alphabets')}
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
+            <div className="flex  w-[80%] items-center justify-between">
+              <h5>Gross Salary $PY</h5>
+              <input type="string" className="w-full py-4 h-2 border-2 border-black text-right" 
+                onInput={(e) => validateInput(e.target, 'numbers')}
+                onChange={(e) => {
+                  const numberValue = handleFormattedInput(e.target)
+                  setGrossSalary(Number(numberValue));
+
+                }}
+                value={formatNumber(String(grossSalary))}
               />
             </div>
             <div className="flex space-x-9 items-center justify-center">
@@ -96,7 +102,6 @@ const EmployeeForm = () => {
                 
               </select>
             </div>
-           
           </div>
          
         </div>
