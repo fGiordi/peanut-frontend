@@ -2,12 +2,11 @@ import axios from 'axios';
 import {create} from 'zustand';
 import { Employee } from '@/types';
 
-
-
 interface DataStoreState {
   data: Employee[];
   loading: boolean;
   error: Error | null;
+  createEmployee: (employee: Employee)  => void
 }
 
 export const useEmployeeStore = create<DataStoreState>((set) => ({
@@ -29,9 +28,11 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
   },
   // Create a new employee
   createEmployee: async (employeeData: Employee) => {
+    console.log('creating an employee', employeeData)
     set({ loading: true, error: null });
     try {
       const response = await axios.post<Employee>('/api/employees', employeeData);
+      console.log('resposne in store', response)
       set((state) => ({ data: [...state.data, response.data], loading: false }));
     } catch (error) {
 			// @ts-ignore

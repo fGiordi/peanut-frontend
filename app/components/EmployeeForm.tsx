@@ -7,6 +7,7 @@ import { useState, } from 'react';
 
 const EmployeeForm = () => {
 
+  // TODO to move to store?
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [employeeNumber, setEmployeeNumber] = useState<number | undefined>()
@@ -14,6 +15,7 @@ const EmployeeForm = () => {
   const [salutation, setSalutation] = useState<TSalutation>('Mr.')
   const [color, setColor] = useState<TColor>('Default')
 
+	const { data, loading, error, createEmployee } = useEmployeeStore();
 
   const isBlue = color === 'Blue'
   const isRed = color === 'Red'
@@ -36,8 +38,34 @@ const EmployeeForm = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    alert('submit running')
+   if(grossSalary && employeeNumber) {
+    try {
+      const response = await createEmployee({
+        firstName,
+        lastName,
+        employeeNumber,
+        grossSalary: 1000000,
+        salutation,
+        profileColor: color,
+        gender: isMale ? 'Male' : isFemale ? 'Female': 'Unspecified'
+      })
+      console.log('response', response)
+    } catch (error) {
+      console.log('error creating employee', error)
+    }
+   }
+  }
+
 
   return (
+    <form onSubmit={(e) => e.preventDefault()}>
+    <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
+      <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200">Cancel</button>
+      {/* TODO to change color of Save button based on selected color from DB */}
+      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit" onClick={handleSubmit}>Save</button>
+    </div>
     <div className="flex justify-between items-start">
       <div className="flex flex-col items-start justify-start w-full space-y-4">
         <div className="flex space-x-2 items-center justify-center">
@@ -160,6 +188,8 @@ const EmployeeForm = () => {
       </div>
 
     </div>
+    </form>
+
   );
 };
 

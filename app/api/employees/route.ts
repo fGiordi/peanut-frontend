@@ -62,24 +62,31 @@ export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: any, res: NextApiResponse) {
   try {
-    const { firstName, lastName, profileColor, grossSalary, salutation, gender } = req.body;
+    // Next API request missing .json()
+    // so typescript throws an error
+    const body = await req.json()
 
-    const response = await server.put(`employees`, {
+    const { firstName, lastName, profileColor, grossSalary, salutation, gender,employeeNumber } = body;
+
+
+    const response = await server.post(`employees`, {
       firstName,
       lastName,
       profileColor,
       grossSalary,
       salutation,
       gender,
+      employeeNumber
     });
 
     const newEmployee = response.data;
 
     res.status(200).json(newEmployee);
   } catch (error) {
-    console.error('Error creating employee:', error);
+    // @ts-ignore
+    console.error('Error creating employee:', error.message);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
