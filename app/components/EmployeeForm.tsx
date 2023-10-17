@@ -2,7 +2,7 @@
 
 import { validateInput, formatNumber, handleFormattedInput } from '@/helpers';
 import { useEmployeeStore } from '@/store/employee';
-import { TSalutation, salutationOptions, TGender, colorOptions, TColor } from '@/types';
+import { TSalutation, salutationOptions, TColor } from '@/types';
 import { useState, } from 'react';
 
 const EmployeeForm = () => {
@@ -16,6 +16,7 @@ const EmployeeForm = () => {
   const [color, setColor] = useState<TColor>('Default')
 
 	const { data, loading, error, createEmployee } = useEmployeeStore();
+  console.log('data inside', data)
 
   const isBlue = color === 'Blue'
   const isRed = color === 'Red'
@@ -39,14 +40,13 @@ const EmployeeForm = () => {
   };
 
   const handleSubmit = async () => {
-    alert('submit running')
    if(grossSalary && employeeNumber) {
     try {
       const response = await createEmployee({
         firstName,
         lastName,
         employeeNumber,
-        grossSalary: 1000000,
+        grossSalary,
         salutation,
         profileColor: color,
         gender: isMale ? 'Male' : isFemale ? 'Female': 'Unspecified'
@@ -58,13 +58,15 @@ const EmployeeForm = () => {
    }
   }
 
-
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form onSubmit={(e) => {
+      e.preventDefault()
+      handleSubmit()
+    }}>
     <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
       <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200">Cancel</button>
       {/* TODO to change color of Save button based on selected color from DB */}
-      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit" onClick={handleSubmit}>Save</button>
+      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit">Save</button>
     </div>
     <div className="flex justify-between items-start">
       <div className="flex flex-col items-start justify-start w-full space-y-4">

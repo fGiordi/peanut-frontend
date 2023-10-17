@@ -70,7 +70,6 @@ export async function POST(req: any, res: NextApiResponse) {
 
     const { firstName, lastName, profileColor, grossSalary, salutation, gender,employeeNumber } = body;
 
-
     const response = await server.post(`employees`, {
       firstName,
       lastName,
@@ -83,11 +82,13 @@ export async function POST(req: any, res: NextApiResponse) {
 
     const newEmployee = response.data;
 
-    res.status(200).json(newEmployee);
+    return NextResponse.json(newEmployee)
   } catch (error) {
     // @ts-ignore
     console.error('Error creating employee:', error.message);
     res.status(500).json({ error: 'Internal server error' });
+    // @ts-ignore
+    return NextResponse.json({error: error.message})
   }
 }
 

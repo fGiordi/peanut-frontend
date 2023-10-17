@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {create} from 'zustand';
 import { Employee } from '@/types';
+import {toast} from 'react-toastify'
 
 interface DataStoreState {
   data: Employee[];
@@ -28,15 +29,16 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
   },
   // Create a new employee
   createEmployee: async (employeeData: Employee) => {
-    console.log('creating an employee', employeeData)
     set({ loading: true, error: null });
     try {
       const response = await axios.post<Employee>('/api/employees', employeeData);
-      console.log('resposne in store', response)
+      toast('Employee Created', {type: 'success'})
       set((state) => ({ data: [...state.data, response.data], loading: false }));
+      return response
     } catch (error) {
 			// @ts-ignore
       set({ error, loading: false });
+      toast('Error on creating employee', {type: 'error'})
     }
   },
   // Update an existing employee

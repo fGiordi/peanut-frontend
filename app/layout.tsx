@@ -1,6 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import ClientOnly from '@/app/components/ClientOnly'
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white  min-h-screen flex flex-col w-full max-w-[1500px] mx-auto`}>{children}</body>
+      <body className={`${inter.className} bg-white  min-h-screen flex flex-col w-full max-w-[1500px] mx-auto`}>
+        <ClientOnly>
+          <ToastContainer />
+        </ClientOnly>
+        <div>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
