@@ -9,6 +9,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { Employee } from '@/types';
 
 type Person = {
   firstName: string
@@ -46,21 +47,22 @@ const defaultData: Person[] = [
   },
 ]
 
-const columnHelper = createColumnHelper<Person>()
+const columnHelper = createColumnHelper<Employee>()
 
 const columns = [
-  columnHelper.accessor('firstName', {
+  columnHelper.accessor('employeeNumber', {
+    header: () => <span className='text-left bg-red-400'>Employee # </span>,
     cell: info => info.getValue(),
     footer: info => info.column.id,
   }),
   columnHelper.accessor(row => row.lastName, {
-    id: 'lastName',
+    id: 'firstName',
     cell: info => <i>{info.getValue()}</i>,
-    header: () => <span>Last Name</span>,
+    header: () => <span>First Name</span>,
     footer: info => info.column.id,
   }),
-  columnHelper.accessor('age', {
-    header: () => 'Age',
+  columnHelper.accessor('lastName', {
+    header: () => 'Last Name',
     cell: info => info.renderValue(),
     footer: info => info.column.id,
   }),
@@ -79,8 +81,8 @@ const columns = [
 ]
 
 const EmployeeList = () => {
-	const {  loading, error, fetchData } = useEmployeeStore();
-	// console.log('data', data)
+	const {  data: employees, loading, error, fetchData } = useEmployeeStore();
+	console.log('data', employees)
 
 
   // useEffect(() => {
