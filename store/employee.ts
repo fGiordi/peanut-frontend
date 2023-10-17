@@ -1,12 +1,8 @@
 import axios from 'axios';
 import {create} from 'zustand';
+import { Employee } from '@/types';
 
-interface Employee {
-  id: string;
-  firstName: string;
-  lastName: string;
-	// TODO to add other types here
-}
+
 
 interface DataStoreState {
   data: Employee[];
