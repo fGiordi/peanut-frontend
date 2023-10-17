@@ -15,7 +15,7 @@ export default function Home() {
           <h2 className='text-gray-800 font-bold p-5 text-center'>Employee Information</h2>
 
           </div>
-          <div className="px-5 flex justify-end space-x-6 max-w-[700px] mb-6">
+          <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
             <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200">Cancel</button>
             {/* TODO to change color of Save button based on selected color from DB */}
             <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500">Save</button>
