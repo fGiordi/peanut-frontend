@@ -6,7 +6,7 @@ export function validateInput(
   validationType: ValidationType
 ): void {
   const inputValue: string = inputElement.value;
-  const alphabeticPattern: RegExp = /^[A-Za-z]+$/;
+  const alphabeticPattern: RegExp = /^[A-Za-z ]+$/;
   const numericPattern: RegExp = /^\d+$/;
 
   if (validationType === 'alphabets') {
