@@ -34,7 +34,7 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
       const response = await axios.post<Employee>('/api/employees', employeeData);
       toast('Employee Created', {type: 'success'})
       set((state) => ({ data: [...state.data, response.data], loading: false }));
-      return response
+      return response.data
     } catch (error) {
 			// @ts-ignore
       set({ error, loading: false });
