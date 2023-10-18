@@ -7,7 +7,8 @@ interface DataStoreState {
   data: Employee[];
   loading: boolean;
   error: Error | null;
-  createEmployee: (employee: Employee)  => void
+  createEmployee: (employee: Employee) => Promise<void>
+  fetchData: () => Promise<void>
 }
 
 export const useEmployeeStore = create<DataStoreState>((set) => ({
@@ -28,13 +29,12 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
     }
   },
   // Create a new employee
-  createEmployee: async (employeeData: Employee) => {
+  createEmployee: async (employeeData: Employee): Promise<void> => {
     set({ loading: true, error: null });
     try {
       const response = await axios.post<Employee>('/api/employees', employeeData);
       toast('Employee Created', {type: 'success'})
       set((state) => ({ data: [...state.data, response.data], loading: false }));
-      return response.data
     } catch (error) {
 			// @ts-ignore
       set({ error, loading: false });

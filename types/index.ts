@@ -15,3 +15,7 @@ export interface Employee {
   grossSalary: number;
   profileColor: TColor
 }
+
+export interface CreatedEmployee extends Employee {
+  _id: string
+}
