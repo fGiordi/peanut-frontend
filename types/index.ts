@@ -21,15 +21,16 @@ export interface CreatedEmployee extends Employee {
 }
 
 export interface DataStoreState {
-  data: Employee[];
+  data: Employee[] | CreatedEmployee[];
   loading: boolean;
   error: Error | null;
   createEmployee: (employee: Employee) => Promise<void>
   fetchData: () => void
   selectedEmployee: null  | Employee
+  deleteEmployee: (employeeId: string) => Promise<void>
 }
 
 export interface GlobalState {
-	selectedEmployee: null | Employee
-  handleSelectedEmployee: (employee: Employee | null) => void
+	selectedEmployee: null | CreatedEmployee
+  handleSelectedEmployee: (employee: CreatedEmployee | null) => void
 }

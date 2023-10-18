@@ -4,7 +4,6 @@ import { DataStoreState, Employee } from '@/types';
 import {toast} from 'react-toastify'
 
 
-
 export const useEmployeeStore = create<DataStoreState>((set) => ({
   data: [],
   loading: false,
@@ -53,17 +52,24 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
     }
   },
   // Delete an employee
-  deleteEmployee: async (employeeId: string) => {
+  deleteEmployee: async (employeeId: string): Promise<void> => {
     set({ loading: true, error: null });
     try {
       await axios.delete(`/api/employees/${employeeId}`);
+      toast('Employee Removed', {type: 'success'})
+
       set((state) => ({
-        data: state.data.filter((employee) => employee.id !== employeeId),
+        data: state.data.filter((employee) => employee._id !== employeeId),
         loading: false,
       }));
     } catch (error) {
 			// @ts-ignore
       set({ error, loading: false });
+      // @ts-ignore
+      console.log('error', error.message)
+      // @ts-ignore
+      toast('Error Removing Employee', {type: 'error'})
+
     }
   },
 }));

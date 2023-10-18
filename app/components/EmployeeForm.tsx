@@ -7,7 +7,7 @@ import { TSalutation, salutationOptions, TColor, TGender } from '@/types';
 import { useState, useEffect } from 'react';
 
 const EmployeeForm = () => {
-  const { data, loading, error, createEmployee } = useEmployeeStore();
+  const { data, loading, error, createEmployee, deleteEmployee } = useEmployeeStore();
   const {handleSelectedEmployee, selectedEmployee} = useGlobalState()
 
   // TODO to move to store?
@@ -23,7 +23,6 @@ const EmployeeForm = () => {
   const isFemale = salutation === 'Mrs.'
   const isUnspecified = salutation  === 'Mx.'
 
-  console.log('firstName', selectedEmployee)
 
   // TODO to reset or clear form
   useEffect(() => {
@@ -83,14 +82,27 @@ const EmployeeForm = () => {
    }
   }
 
+  const handleDelete = async () => {
+
+    if(selectedEmployee) {
+
+      try {
+        await deleteEmployee(selectedEmployee._id)
+      } catch (error) {
+        console.log('error removing employee', error)
+      }
+    }
+   }
+
   return (
     <form onSubmit={(e) => {
       e.preventDefault()
     }}>
     <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
-      <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200" onClick={() => handleSelectedEmployee(null)}>Cancel</button>
+      {selectedEmployee && <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200" onClick={() => handleSelectedEmployee(null)}>Cancel</button>}
       {/* TODO to change color of Save button based on selected color from DB */}
       <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit" onClick={() => handleSubmit}>Save</button>
+      {selectedEmployee && <button className="text-center px-3 text-[16px] text-white rounded-md bg-red-500" onClick={handleDelete}>Remove</button>}
     </div>
     <div className="flex justify-between items-start">
       <div className="flex flex-col items-start justify-start w-full space-y-4">

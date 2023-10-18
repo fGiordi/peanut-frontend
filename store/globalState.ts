@@ -1,10 +1,9 @@
 import {create} from 'zustand';
-import { Employee, GlobalState } from '@/types';
-import {toast} from 'react-toastify'
+import { CreatedEmployee, Employee, GlobalState } from '@/types';
 
 export const useGlobalState = create<GlobalState>((set) => ({
   selectedEmployee: null,
-	handleSelectedEmployee: (employee: Employee | null) => {
+	handleSelectedEmployee: (employee: CreatedEmployee | null) => {
 		set({selectedEmployee: employee})
 	}
 }));

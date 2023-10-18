@@ -1,7 +1,7 @@
 'use client'
 
 import { useEmployeeStore } from '@/store/employee';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   createColumnHelper,

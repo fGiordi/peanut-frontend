@@ -44,24 +44,6 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const { id } = req.query;
-
-    const response = await server.delete(`employees/${id}`, {});
-
-    if (response.status === 204) {
-      NextResponse.json({})
-    } else {
-      console.error('Failed to delete employee');
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  } catch (error) {
-    console.error('Error deleting employee:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
 export async function POST(req: any, res: NextApiResponse) {
   try {
     // Next API request missing .json()
