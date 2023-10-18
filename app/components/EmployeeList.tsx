@@ -46,7 +46,7 @@ const columns = [
 const EmployeeList = () => {
 	const {  data: employees, loading, error, fetchData } = useEmployeeStore();
 
-  const {handleSelectedEmployee, handleEmployeeClick} = useGlobalState()
+  const {handleSelectedEmployee, handleEmployeeClick, selectedEmployee} = useGlobalState()
 
 	useEffect(() => {
     fetchData();
@@ -88,7 +88,7 @@ const EmployeeList = () => {
           <tr key={row.id} className='border'>
             {row.getVisibleCells().map(cell => {
               return (
-                <td key={cell.id} className='border hover:cursor-pointer' onClick={() => handleSelectedEmployee(cell.getContext().row.original)}>
+                <td key={cell.id} className={`border hover:cursor-pointer ${selectedEmployee && selectedEmployee._id == cell.getContext().row.original._id ? 'bg-blue-100' : ''}`}  onClick={() => handleSelectedEmployee(cell.getContext().row.original)}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
               )

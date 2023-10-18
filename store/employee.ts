@@ -14,7 +14,7 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
   fetchData: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.get<Employee[]>('/api/employees')
+      const response = await axios.get<CreatedEmployee[]>('/api/employees')
 			// @ts-ignore
 			const result = response.data.employees
       set({ data: result.employees, loading: false });

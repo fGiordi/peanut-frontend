@@ -27,7 +27,7 @@ const EmployeeForm = () => {
   useEffect(() => {
     if(selectedEmployee){
       setFirstName(selectedEmployee.firstName)
-      setLastName(selectedEmployee.firstName)
+      setLastName(selectedEmployee.lastName)
       setEmployeeNumber(selectedEmployee.employeeNumber)
       setGrossSalary(selectedEmployee.grossSalary)
       setSalutation(selectedEmployee.salutation)
