@@ -51,8 +51,8 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
     } catch (error) {
 			// @ts-ignore
       console.log('error', error.message)
-      set({ error, loading: false });
-      toast('Unable up update', {type: 'error'})
+      set({ loading: false });
+      toast('Unable to update', {type: 'error'})
     }
   },
   // Delete an employee

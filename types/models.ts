@@ -8,6 +8,7 @@ export interface Employee {
   employeeNumber: number;
   grossSalary: number;
   profileColor: TColor
+	_id?: string
 }
 
 export interface CreatedEmployee extends Employee {

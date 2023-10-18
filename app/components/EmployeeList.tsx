@@ -12,6 +12,7 @@ import {
 import { Employee } from '@/types/models';
 import { useGlobalState } from '@/store/globalState';
 import { PuffLoader } from 'react-spinners';
+import { formatNumber } from '@/helpers';
 
 const columnHelper = createColumnHelper<Employee>()
 
@@ -39,6 +40,11 @@ const columns = [
   columnHelper.accessor('profileColor', {
     cell: info => <i>{info.getValue()}</i>,
     header: () => <span>Profile Color</span>,
+    footer: info => info.column.id,
+  }),
+  columnHelper.accessor('grossSalary', {
+    cell: info => <i>{formatNumber(info.getValue().toString())}</i>,
+    header: () => <span>Gross Salary</span>,
     footer: info => info.column.id,
   }),
 ]
