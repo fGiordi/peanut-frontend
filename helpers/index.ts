@@ -13,7 +13,7 @@ export function validateInput(
   
 
   if (validationType === 'alphabets') {
-    if (!alphabeticPattern.test(inputValue)) {
+    if (notEmpty && !alphabeticPattern.test(inputValue)) {
       inputElement.value = '';
       alert('Please enter alphabetic characters only.');
     }

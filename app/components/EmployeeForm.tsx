@@ -23,7 +23,6 @@ const EmployeeForm = () => {
   const isFemale = salutation === 'Mrs.'
   const isUnspecified = salutation  === 'Mx.'
 
-
   console.log('firstName', firstName)
 
   // TODO to reset or clear form
