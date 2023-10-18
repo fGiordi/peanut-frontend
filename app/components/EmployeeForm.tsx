@@ -7,7 +7,7 @@ import { TSalutation, salutationOptions, TColor, TGender } from '@/types';
 import { useState, useEffect } from 'react';
 
 const EmployeeForm = () => {
-  const { data, loading, error, createEmployee, deleteEmployee } = useEmployeeStore();
+  const { data, loading, error, createEmployee, deleteEmployee, updateEmployee } = useEmployeeStore();
   const {handleSelectedEmployee, selectedEmployee} = useGlobalState()
 
   // TODO to move to store?
@@ -64,10 +64,25 @@ const EmployeeForm = () => {
     }
   };
 
-  const handleSubmit = async () => {
-   if(grossSalary && employeeNumber) {
+  const handleSubmit = async (type: string) => {
+   if(grossSalary && employeeNumber && type === 'new') {
     try {
       await createEmployee({
+        firstName,
+        lastName,
+        employeeNumber,
+        grossSalary,
+        salutation,
+        profileColor: color,
+        gender: isMale ? 'Male' : isFemale ? 'Female': 'Unspecified'
+      })
+    } catch (error) {
+      console.log('error creating employee', error)
+    }
+   }
+   if(selectedEmployee && type === 'update' && employeeNumber && grossSalary) {
+    try {
+      await updateEmployee(selectedEmployee._id,{
         firstName,
         lastName,
         employeeNumber,
@@ -101,7 +116,7 @@ const EmployeeForm = () => {
     <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
       {selectedEmployee && <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200" onClick={() => handleSelectedEmployee(null)}>Cancel</button>}
       {/* TODO to change color of Save button based on selected color from DB */}
-      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit" onClick={() => handleSubmit}>Save</button>
+      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit" onClick={selectedEmployee ? () => handleSubmit('update'):() => handleSubmit('new') }>Save</button>
       {selectedEmployee && <button className="text-center px-3 text-[16px] text-white rounded-md bg-red-500" onClick={handleDelete}>Remove</button>}
     </div>
     <div className="flex justify-between items-start">

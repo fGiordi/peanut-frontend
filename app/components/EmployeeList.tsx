@@ -88,7 +88,7 @@ const EmployeeList = () => {
                 </td>
                 )
               }
-)}
+            )}
             </tr>
           ))}
         </tbody>

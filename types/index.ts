@@ -28,6 +28,7 @@ export interface DataStoreState {
   fetchData: () => void
   selectedEmployee: null  | Employee
   deleteEmployee: (employeeId: string) => Promise<void>
+  updateEmployee: (employeeId: string, data: Employee) => Promise<void>
 }
 
 export interface GlobalState {

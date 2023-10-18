@@ -5,7 +5,6 @@ import ClientOnly from '@/app/components/ClientOnly'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

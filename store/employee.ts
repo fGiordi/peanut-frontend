@@ -40,15 +40,18 @@ export const useEmployeeStore = create<DataStoreState>((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.put<Employee>(`/api/employees/${employeeId}`, updatedData);
+      toast('Employee Updated', {type: 'success'})
       set((state) => ({
         data: state.data.map((employee) =>
-          employee.id === employeeId ? response.data : employee
+          employee._id === employeeId ? response.data : employee
         ),
         loading: false,
       }));
     } catch (error) {
 			// @ts-ignore
+      console.log('error', error.message)
       set({ error, loading: false });
+      toast('Unable up update', {type: 'error'})
     }
   },
   // Delete an employee
