@@ -9,8 +9,9 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Employee } from '@/types';
+import { Employee } from '@/types/models';
 import { useGlobalState } from '@/store/globalState';
+import { PuffLoader } from 'react-spinners';
 
 const columnHelper = createColumnHelper<Employee>()
 
@@ -45,12 +46,11 @@ const columns = [
 const EmployeeList = () => {
 	const {  data: employees, loading, error, fetchData } = useEmployeeStore();
 
-  const {handleSelectedEmployee} = useGlobalState()
+  const {handleSelectedEmployee, handleEmployeeClick} = useGlobalState()
 
 	useEffect(() => {
     fetchData();
   }, []);
-
 
   const table = useReactTable({
     data: employees,
@@ -58,42 +58,50 @@ const EmployeeList = () => {
     getCoreRowModel: getCoreRowModel(),
   })
 
-
   return (
     <div className="w-full">
+      <div className="flex items-center justify-between">
+        <div></div>
+        <h2 className='text-gray-800 font-bold p-5 text-center'>Current Employees</h2>
+        <button className='border bg-gray-200 p-1 rounded-md' onClick={handleEmployeeClick}>Add Employee</button>
+      </div>
+      {loading ? <div className='flex items-center justify-center'><PuffLoader color="#000"/></div>: 
       <table className='w-full border'>
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th key={header.id} className='border'>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody className='border'>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id} className='border'>
-              {row.getVisibleCells().map(cell => {
-                return (
-                  <td key={cell.id} className='border hover:cursor-pointer' onClick={() => handleSelectedEmployee(cell.getContext().row.original)}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-                )
-              }
-            )}
-            </tr>
-          ))}
-        </tbody>
-        
-      </table>
+      <thead>
+        {table.getHeaderGroups().map(headerGroup => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map(header => (
+              <th key={header.id} className='border'>
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody className='border'>
+        {table.getRowModel().rows.map(row => (
+          <tr key={row.id} className='border'>
+            {row.getVisibleCells().map(cell => {
+              return (
+                <td key={cell.id} className='border hover:cursor-pointer' onClick={() => handleSelectedEmployee(cell.getContext().row.original)}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+              )
+            }
+          )}
+          </tr>
+        ))}
+      </tbody>
+      
+    </table>
+      }
+
+      
       <div className="h-4" />
     </div>
   )

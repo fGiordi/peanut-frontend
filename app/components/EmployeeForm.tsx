@@ -4,11 +4,12 @@ import { validateInput, formatNumber, handleFormattedInput } from '@/helpers';
 import { useEmployeeStore } from '@/store/employee';
 import { useGlobalState } from '@/store/globalState';
 import { TSalutation, salutationOptions, TColor } from '@/types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const EmployeeForm = () => {
   const { data, loading, error, createEmployee, deleteEmployee, updateEmployee } = useEmployeeStore();
-  const {handleSelectedEmployee, selectedEmployee} = useGlobalState()
+  const {handleSelectedEmployee, selectedEmployee, addEmployeeCheck} = useGlobalState()
+  const inputRef = useRef(null);
 
   // TODO to move to store?
   const [firstName, setFirstName] = useState(selectedEmployee?.firstName || '')
@@ -44,6 +45,12 @@ const EmployeeForm = () => {
     }
   }, [JSON.stringify(selectedEmployee)])
 
+  useEffect(() => {
+    if (addEmployeeCheck) {
+      inputRef.current.focus();
+    }
+  }, [addEmployeeCheck]);
+
 
   const isBlue = color === 'Blue'
   const isRed = color === 'Red'
@@ -74,6 +81,7 @@ const EmployeeForm = () => {
         profileColor: color,
         gender: isMale ? 'Male' : isFemale ? 'Female': 'Unspecified'
       })
+      handleSelectedEmployee(null)
     } catch (error) {
       console.log('error creating employee', error)
     }
@@ -124,6 +132,7 @@ const EmployeeForm = () => {
             onInput={(e) => validateInput(e.target, 'alphabets')}
             onChange={(e) => setFirstName(e.target.value)}
             value={firstName}
+            ref={inputRef}
           />
         </div>
         <div className="flex space-x-7 items-center justify-center">

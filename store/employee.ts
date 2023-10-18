@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {create} from 'zustand';
-import { DataStoreState, Employee } from '@/types';
+import { DataStoreState } from '@/types';
+import {Employee, CreatedEmployee} from '@/types/models'
 import {toast} from 'react-toastify'
 
 
