@@ -19,3 +19,17 @@ export interface Employee {
 export interface CreatedEmployee extends Employee {
   _id: string
 }
+
+export interface DataStoreState {
+  data: Employee[];
+  loading: boolean;
+  error: Error | null;
+  createEmployee: (employee: Employee) => Promise<void>
+  fetchData: () => void
+  selectedEmployee: null  | Employee
+}
+
+export interface GlobalState {
+	selectedEmployee: null | Employee
+  handleSelectedEmployee: (employee: Employee) => void
+}

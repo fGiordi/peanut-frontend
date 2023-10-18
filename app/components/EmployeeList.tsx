@@ -10,7 +10,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { Employee } from '@/types';
-
+import { useGlobalState } from '@/store/globalState';
 
 const columnHelper = createColumnHelper<Employee>()
 
@@ -45,14 +45,15 @@ const columns = [
 const EmployeeList = () => {
 	const {  data: employees, loading, error, fetchData } = useEmployeeStore();
 
+  const {handleSelectedEmployee} = useGlobalState()
+
 	useEffect(() => {
     fetchData();
   }, []);
 
-  const [data, setData] = useState(() => [...employees])
 
   const table = useReactTable({
-    data,
+    data: employees,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -80,11 +81,14 @@ const EmployeeList = () => {
         <tbody className='border'>
           {table.getRowModel().rows.map(row => (
             <tr key={row.id} className='border'>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id} className='border hover:cursor-pointer'>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <td key={cell.id} className='border hover:cursor-pointer' onClick={() => handleSelectedEmployee(cell.getContext().row.original)}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
-              ))}
+                )
+              }
+)}
             </tr>
           ))}
         </tbody>

@@ -2,21 +2,37 @@
 
 import { validateInput, formatNumber, handleFormattedInput } from '@/helpers';
 import { useEmployeeStore } from '@/store/employee';
-import { TSalutation, salutationOptions, TColor } from '@/types';
-import { useState, } from 'react';
+import { useGlobalState } from '@/store/globalState';
+import { TSalutation, salutationOptions, TColor, TGender } from '@/types';
+import { useState, useEffect } from 'react';
 
 const EmployeeForm = () => {
+  const { data, loading, error, createEmployee } = useEmployeeStore();
+  const {handleSelectedEmployee, selectedEmployee} = useGlobalState()
 
   // TODO to move to store?
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [employeeNumber, setEmployeeNumber] = useState<number | undefined>()
-  const [grossSalary, setGrossSalary] = useState<number | undefined>(0)
-  const [salutation, setSalutation] = useState<TSalutation>('Mr.')
+  const [firstName, setFirstName] = useState(selectedEmployee?.firstName || '')
+  const [lastName, setLastName] = useState(selectedEmployee?.lastName || '')
+  const [employeeNumber, setEmployeeNumber] = useState<number | undefined>(selectedEmployee?.employeeNumber)
+  const [grossSalary, setGrossSalary] = useState<number | undefined>(selectedEmployee?.grossSalary || 0)
+  const [salutation, setSalutation] = useState<TSalutation>(selectedEmployee?.salutation|| 'Mr.')
   const [color, setColor] = useState<TColor>('Default')
+  const [gender, setGender] = useState<TGender>('Male')
 
-	const { data, loading, error, createEmployee } = useEmployeeStore();
-  console.log('data inside', data)
+  console.log('firstName', firstName)
+
+  // TODO to reset or clear form
+  useEffect(() => {
+    if(selectedEmployee){
+      setFirstName(selectedEmployee.firstName)
+      setLastName(selectedEmployee.firstName)
+      setEmployeeNumber(selectedEmployee.employeeNumber)
+      setGrossSalary(selectedEmployee.grossSalary)
+      setSalutation(selectedEmployee.salutation)
+      setColor(selectedEmployee.profileColor)
+    }
+  }, [JSON.stringify(selectedEmployee)])
+
 
   const isBlue = color === 'Blue'
   const isRed = color === 'Red'

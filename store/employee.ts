@@ -1,20 +1,15 @@
 import axios from 'axios';
 import {create} from 'zustand';
-import { Employee } from '@/types';
+import { DataStoreState, Employee } from '@/types';
 import {toast} from 'react-toastify'
 
-interface DataStoreState {
-  data: Employee[];
-  loading: boolean;
-  error: Error | null;
-  createEmployee: (employee: Employee) => Promise<void>
-  fetchData: () => Promise<void>
-}
+
 
 export const useEmployeeStore = create<DataStoreState>((set) => ({
   data: [],
   loading: false,
   error: null,
+  selectedEmployee: null,
   // Fetch all employees
   fetchData: async () => {
     set({ loading: true, error: null });
