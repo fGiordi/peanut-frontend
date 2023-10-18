@@ -3,7 +3,7 @@
 import { validateInput, formatNumber, handleFormattedInput } from '@/helpers';
 import { useEmployeeStore } from '@/store/employee';
 import { useGlobalState } from '@/store/globalState';
-import { TSalutation, salutationOptions, TColor, TGender } from '@/types';
+import { TSalutation, salutationOptions, TColor } from '@/types';
 import { useState, useEffect } from 'react';
 
 const EmployeeForm = () => {
@@ -17,12 +17,10 @@ const EmployeeForm = () => {
   const [grossSalary, setGrossSalary] = useState<number | undefined>(selectedEmployee?.grossSalary || 0)
   const [salutation, setSalutation] = useState<TSalutation>(selectedEmployee?.salutation|| 'Mr.')
   const [color, setColor] = useState<TColor>('Default')
-  // const [gender, setGender] = useState<TGender>( isMale ? 'Male' : isFemale ? 'Female': 'Unspecified')
 
   const isMale = salutation === 'Mr.'
   const isFemale = salutation === 'Mrs.'
   const isUnspecified = salutation  === 'Mx.'
-
 
   // TODO to reset or clear form
   useEffect(() => {
@@ -98,11 +96,10 @@ const EmployeeForm = () => {
   }
 
   const handleDelete = async () => {
-
     if(selectedEmployee) {
-
       try {
         await deleteEmployee(selectedEmployee._id)
+        handleSelectedEmployee(null)
       } catch (error) {
         console.log('error removing employee', error)
       }
@@ -116,7 +113,7 @@ const EmployeeForm = () => {
     <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
       {selectedEmployee && <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200" onClick={() => handleSelectedEmployee(null)}>Cancel</button>}
       {/* TODO to change color of Save button based on selected color from DB */}
-      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit" onClick={selectedEmployee ? () => handleSubmit('update'):() => handleSubmit('new') }>Save</button>
+      <button className={`text-center px-3 text-[16px] rounded-md ${isBlue ? 'bg-blue-500 text-white ': isGreen ? 'bg-green-400 text-white ': isRed ? 'bg-red-300' : isDefault ? 'bg-gray-200 text-black':'' }`} type="submit" onClick={selectedEmployee ? () => handleSubmit('update'):() => handleSubmit('new') }>Save</button>
       {selectedEmployee && <button className="text-center px-3 text-[16px] text-white rounded-md bg-red-500" onClick={handleDelete}>Remove</button>}
     </div>
     <div className="flex justify-between items-start">
@@ -144,9 +141,8 @@ const EmployeeForm = () => {
           <select className='w-[200px] py-1 border-2 border-black' name="salutation" id="salutation" onChange={(e) => setSalutation(e.target.value as TSalutation)}>
             {salutationOptions.map((item, index) => (
               <option key={index} value={item}>{item}</option>
-            )
+              )
             )}
-
           </select>
         </div>
         <div className="flex items-center gap-16 w-full">
