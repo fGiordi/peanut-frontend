@@ -17,7 +17,12 @@ const EmployeeForm = () => {
   const [grossSalary, setGrossSalary] = useState<number | undefined>(selectedEmployee?.grossSalary || 0)
   const [salutation, setSalutation] = useState<TSalutation>(selectedEmployee?.salutation|| 'Mr.')
   const [color, setColor] = useState<TColor>('Default')
-  const [gender, setGender] = useState<TGender>('Male')
+  // const [gender, setGender] = useState<TGender>( isMale ? 'Male' : isFemale ? 'Female': 'Unspecified')
+
+  const isMale = salutation === 'Mr.'
+  const isFemale = salutation === 'Mrs.'
+  const isUnspecified = salutation  === 'Mx.'
+
 
   console.log('firstName', firstName)
 
@@ -30,6 +35,7 @@ const EmployeeForm = () => {
       setGrossSalary(selectedEmployee.grossSalary)
       setSalutation(selectedEmployee.salutation)
       setColor(selectedEmployee.profileColor)
+      // setGender(selectedEmployee.gender)
     }
   }, [JSON.stringify(selectedEmployee)])
 
@@ -39,9 +45,7 @@ const EmployeeForm = () => {
   const isDefault = color === 'Default'
   const isGreen = color === 'Green'
 
-  const isMale = salutation === 'Mr.'
-  const isFemale = salutation === 'Mrs.'
-  const isUnspecified = salutation === 'Mx.'
+
 
   const fullName = `${firstName} ${lastName}`
 
