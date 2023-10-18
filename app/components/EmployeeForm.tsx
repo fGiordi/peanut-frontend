@@ -11,7 +11,6 @@ const EmployeeForm = () => {
   const {handleSelectedEmployee, selectedEmployee, addEmployeeCheck} = useGlobalState()
   const inputRef = useRef(null);
 
-  // TODO to move to store?
   const [firstName, setFirstName] = useState(selectedEmployee?.firstName || '')
   const [lastName, setLastName] = useState(selectedEmployee?.lastName || '')
   const [employeeNumber, setEmployeeNumber] = useState<number | undefined>(selectedEmployee?.employeeNumber)
@@ -32,7 +31,6 @@ const EmployeeForm = () => {
       setGrossSalary(selectedEmployee.grossSalary)
       setSalutation(selectedEmployee.salutation)
       setColor(selectedEmployee.profileColor)
-      // setGender(selectedEmployee.gender)
     }
     // TODO to refactor this?
     if (selectedEmployee == null) {
