@@ -23,7 +23,7 @@ const EmployeeForm = () => {
   const isFemale = salutation === 'Mrs.'
   const isUnspecified = salutation  === 'Mx.'
 
-  console.log('firstName', firstName)
+  console.log('firstName', selectedEmployee)
 
   // TODO to reset or clear form
   useEffect(() => {
@@ -36,6 +36,15 @@ const EmployeeForm = () => {
       setColor(selectedEmployee.profileColor)
       // setGender(selectedEmployee.gender)
     }
+    // TODO to refactor this?
+    if (selectedEmployee == null) {
+      setFirstName('')
+      setLastName('')
+      setEmployeeNumber(0)
+      setGrossSalary(0)
+      setSalutation('Mr.')
+      setColor('Default')
+    }
   }, [JSON.stringify(selectedEmployee)])
 
 
@@ -43,8 +52,6 @@ const EmployeeForm = () => {
   const isRed = color === 'Red'
   const isDefault = color === 'Default'
   const isGreen = color === 'Green'
-
-
 
   const fullName = `${firstName} ${lastName}`
 
@@ -61,7 +68,7 @@ const EmployeeForm = () => {
   const handleSubmit = async () => {
    if(grossSalary && employeeNumber) {
     try {
-      const response = await createEmployee({
+      await createEmployee({
         firstName,
         lastName,
         employeeNumber,
@@ -70,7 +77,6 @@ const EmployeeForm = () => {
         profileColor: color,
         gender: isMale ? 'Male' : isFemale ? 'Female': 'Unspecified'
       })
-      console.log('response', response)
     } catch (error) {
       console.log('error creating employee', error)
     }
@@ -80,12 +86,11 @@ const EmployeeForm = () => {
   return (
     <form onSubmit={(e) => {
       e.preventDefault()
-      handleSubmit()
     }}>
     <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
-      <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200">Cancel</button>
+      <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200" onClick={() => handleSelectedEmployee(null)}>Cancel</button>
       {/* TODO to change color of Save button based on selected color from DB */}
-      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit">Save</button>
+      <button className="text-center px-3 text-[16px] text-white rounded-md bg-blue-500" type="submit" onClick={() => handleSubmit}>Save</button>
     </div>
     <div className="flex justify-between items-start">
       <div className="flex flex-col items-start justify-start w-full space-y-4">

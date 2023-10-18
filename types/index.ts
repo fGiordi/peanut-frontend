@@ -31,5 +31,5 @@ export interface DataStoreState {
 
 export interface GlobalState {
 	selectedEmployee: null | Employee
-  handleSelectedEmployee: (employee: Employee) => void
+  handleSelectedEmployee: (employee: Employee | null) => void
 }
