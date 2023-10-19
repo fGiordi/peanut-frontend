@@ -4,16 +4,18 @@ import { validateInput, formatNumber, handleFormattedInput } from '@/helpers';
 import { useEmployeeStore } from '@/store/employee';
 import { useGlobalState } from '@/store/globalState';
 import { TSalutation, salutationOptions, TColor } from '@/types';
+import { Employee } from '@/types/models';
 import { useState, useEffect, useRef } from 'react';
 
 const EmployeeForm = () => {
   const { data, loading, error, createEmployee, deleteEmployee, updateEmployee } = useEmployeeStore();
+
   const {handleSelectedEmployee, selectedEmployee, addEmployeeCheck} = useGlobalState()
   const inputRef = useRef(null);
 
   const [firstName, setFirstName] = useState(selectedEmployee?.firstName || '')
   const [lastName, setLastName] = useState(selectedEmployee?.lastName || '')
-  const [employeeNumber, setEmployeeNumber] = useState<number | undefined>(selectedEmployee?.employeeNumber)
+  const [employeeNumber, setEmployeeNumber] = useState<number | undefined>(selectedEmployee?.employeeNumber || 0)
   const [grossSalary, setGrossSalary] = useState<number | undefined>(selectedEmployee?.grossSalary || 0)
   const [salutation, setSalutation] = useState<TSalutation>(selectedEmployee?.salutation|| 'Mr.')
   const [color, setColor] = useState<TColor>('Default')
@@ -22,26 +24,32 @@ const EmployeeForm = () => {
   const isFemale = salutation === 'Mrs.' || salutation === 'Ms.'
   const isUnspecified = salutation  === 'Mx.' || salutation === 'Dr.'
 
-  // TODO to reset or clear form
+  const resetForm = () => {
+    setFirstName("");
+    setLastName("");
+    setEmployeeNumber(0);
+    setGrossSalary(0);
+    setSalutation("Mr.");
+    setColor("Default");
+  };
+  
+  const updateForm = (employee: Employee) => {
+    setFirstName(employee.firstName);
+    setLastName(employee.lastName);
+    setEmployeeNumber(employee.employeeNumber);
+    setGrossSalary(employee.grossSalary);
+    setSalutation(employee.salutation);
+    setColor(employee.profileColor);
+  };
+
   useEffect(() => {
-    if(selectedEmployee){
-      setFirstName(selectedEmployee.firstName)
-      setLastName(selectedEmployee.lastName)
-      setEmployeeNumber(selectedEmployee.employeeNumber)
-      setGrossSalary(selectedEmployee.grossSalary)
-      setSalutation(selectedEmployee.salutation)
-      setColor(selectedEmployee.profileColor)
+    if (selectedEmployee === null) {
+      resetForm();
     }
-    // TODO to refactor this?
-    if (selectedEmployee == null) {
-      setFirstName('')
-      setLastName('')
-      setEmployeeNumber(0)
-      setGrossSalary(0)
-      setSalutation('Mr.')
-      setColor('Default')
+    if (selectedEmployee) {
+      updateForm(selectedEmployee);
     }
-  }, [JSON.stringify(selectedEmployee)])
+  }, [JSON.stringify(selectedEmployee)]);
 
   useEffect(() => {
     if (addEmployeeCheck) {

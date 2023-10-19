@@ -64,6 +64,8 @@ const EmployeeList = () => {
     getCoreRowModel: getCoreRowModel(),
   })
 
+  const isEmpty = employees.length == 0
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
@@ -71,7 +73,7 @@ const EmployeeList = () => {
         <h2 className='text-gray-800 font-bold p-5 text-center'>Current Employees</h2>
         <button className='border bg-gray-200 p-1 rounded-md' onClick={handleEmployeeClick}>Add Employee</button>
       </div>
-      {loading ? <div className='flex items-center justify-center'><PuffLoader color="#000"/></div>: 
+      {loading ? <div className='flex items-center justify-center'><PuffLoader color="#000"/></div>: isEmpty ? <div><h2 className='text-center'>There are currently no employees added, please click add Employee to add one</h2></div> :   
       <table className='w-full border'>
       <thead>
         {table.getHeaderGroups().map(headerGroup => (
