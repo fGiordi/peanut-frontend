@@ -126,7 +126,6 @@ const EmployeeForm = () => {
     }}>
     <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">
       {selectedEmployee && <button className="text-center px-3 text-[16px] text-black rounded-md bg-gray-200" onClick={() => handleSelectedEmployee(null)}>Cancel</button>}
-      {/* TODO to change color of Save button based on selected color from DB */}
       <button className={`text-center px-3 text-[16px] rounded-md ${isBlue ? 'bg-blue-500 text-white ': isGreen ? 'bg-green-400 text-white ': isRed ? 'bg-red-300' : isDefault ? 'bg-gray-200 text-black':'' }`} type="submit" onClick={selectedEmployee ? () => handleSubmit('update'):() => handleSubmit('new') }>Save</button>
       {selectedEmployee && <button className="text-center px-3 text-[16px] text-white rounded-md bg-red-500" onClick={handleDelete}>Remove</button>}
     </div>

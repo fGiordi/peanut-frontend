@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Technical Assignment
 
-## Getting Started
+Build a RESTAPI and a Front end that can CRUD Employees.
+We want to be ablet to view the data using React JS and Node Backend.
 
-First, run the development server:
+## Criteria:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [ ] Should be able to view all employees
+- [ ] Should be able to select a record from the employees
+- [ ] Should be able to add/update employee information
+- [ ] Should be able to auto populate Gender and Full Name.
+- [ ] Should be able to DELETE employee
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How to run the application:
+- [ ] clone the backend repo found here #[https://github.com/fGiordi/peanut-butter-payroll] 
+- [ ] run yarn to install the dependencies
+- [ ] run yarn dev to run the server
+- [ ] ** Ensure that you have the ENV variables in the backend, I have a sample file for you to see the example **
+- [ ] now run yarn and yarn dev inside this repo to start the front end server.
+- [ ] Once both the backend and front end is running you should be able to test the application, by adding employees.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## How to test the application:
 
-## Learn More
+- Done in the backend
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Javascript
+- Typescript
+- Next JS
+- CSS
+- Tailwind
+- Node JS
+- Mongo DB
 
-## Deploy on Vercel
+# By:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Giordi Fungula
