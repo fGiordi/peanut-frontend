@@ -19,8 +19,8 @@ const EmployeeForm = () => {
   const [color, setColor] = useState<TColor>('Default')
 
   const isMale = salutation === 'Mr.'
-  const isFemale = salutation === 'Mrs.'
-  const isUnspecified = salutation  === 'Mx.'
+  const isFemale = salutation === 'Mrs.' || salutation === 'Ms.'
+  const isUnspecified = salutation  === 'Mx.' || salutation === 'Dr.'
 
   // TODO to reset or clear form
   useEffect(() => {
