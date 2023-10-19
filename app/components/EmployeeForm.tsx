@@ -43,7 +43,7 @@ const EmployeeForm = () => {
   };
 
   useEffect(() => {
-    if (selectedEmployee === null) {
+    if (selectedEmployee == null) {
       resetForm();
     }
     if (selectedEmployee) {
@@ -53,6 +53,7 @@ const EmployeeForm = () => {
 
   useEffect(() => {
     if (addEmployeeCheck) {
+      // @ts-ignore
       inputRef.current.focus();
     }
   }, [addEmployeeCheck]);

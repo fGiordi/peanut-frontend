@@ -23,7 +23,7 @@ export async function DELETE(req: Request, { params }: { params: IParams }) {
 
 export async function PUT(req: Request, { params }: { params: IParams }) {
   try {
-    const { firstName, lastName, profileColor, grossSalary, salutation, gender } = await req.json()
+    const { firstName, lastName, profileColor, grossSalary, salutation, gender, employeeNumber } = await req.json()
 
     const response = await server.put(`employees/${params.id}`, {
       firstName,
@@ -32,6 +32,7 @@ export async function PUT(req: Request, { params }: { params: IParams }) {
       grossSalary,
       salutation,
       gender,
+      employeeNumber
     });
 
     const updatedEmployee = response.data;
