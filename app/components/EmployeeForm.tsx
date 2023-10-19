@@ -113,7 +113,7 @@ const EmployeeForm = () => {
    }
 
   return (
-    <form onSubmit={(e) => {
+    <form onSubmit={(e) => { 
       e.preventDefault()
     }}>
     <div className="px-5 flex justify-end space-x-6 max-w-[1000px] mb-6">

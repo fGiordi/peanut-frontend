@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {  GlobalState } from '@/types';
-import {Employee, CreatedEmployee} from '@/types/models'
+import { CreatedEmployee} from '@/types/models'
+import {toast} from 'react-toastify'
 
 export const useGlobalState = create<GlobalState>((set) => ({
   selectedEmployee: null,
@@ -10,6 +11,7 @@ export const useGlobalState = create<GlobalState>((set) => ({
 	addEmployeeCheck: false,
 	handleEmployeeClick: () => {
 		set({addEmployeeCheck: true})
+		toast('Proceed with filling in the form now', {type: 'info'})
 	}
 }));
 
