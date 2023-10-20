@@ -89,6 +89,7 @@ const EmployeeForm = () => {
         gender: isMale ? 'Male' : isFemale ? 'Female': 'Unspecified'
       })
       handleSelectedEmployee(null)
+      resetForm()
     } catch (error) {
       console.log('error creating employee', error)
     }
