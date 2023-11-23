@@ -9,7 +9,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Employee } from '@/types/models';
+import { CreatedEmployee, Employee } from '@/types/models';
 import { useGlobalState } from '@/store/globalState';
 import { PuffLoader } from 'react-spinners';
 import { formatNumber } from '@/helpers';
@@ -96,7 +96,7 @@ const EmployeeList = () => {
           <tr key={row.id} className='border'>
             {row.getVisibleCells().map(cell => {
               return (
-                <td key={cell.id} className={`border hover:cursor-pointer ${selectedEmployee && selectedEmployee._id == cell.getContext().row.original._id ? 'bg-blue-100' : ''}`}  onClick={() => handleSelectedEmployee(cell.getContext().row.original)}>
+                <td key={cell.id} className={`border hover:cursor-pointer ${selectedEmployee && selectedEmployee._id == cell.getContext().row.original._id ? 'bg-blue-100' : ''}`}  onClick={() => handleSelectedEmployee(cell.getContext().row.original as CreatedEmployee)}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
               )
