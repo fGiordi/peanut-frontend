@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { NextResponse } from "next/server";
 
 export const server = axios.create({
-  baseURL: 'http://localhost:8080/api/v1/',
+  baseURL: 'https://fc1g67o1ej.execute-api.eu-north-1.amazonaws.com/prod/api/v1/',
 });
  
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
